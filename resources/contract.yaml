@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Ultimania
+  version: 5.0.0
+  contact:
+    email: enwi2@t-online.de
+servers:
+  - url: '/api/v5' # todo
+paths:
+  /maps/{uid}/records:
+    get:
+      parameters:
+        - name: uid
+          in: path
+        - name: limit
+          in: query
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/record"
+  /records:
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/record"
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/record"
+  /players:
+    put:
+      description: create the player if not exists, update otherwise
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/player"
+      responses:
+        200:
+          description: success, returns the player with all information available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/player"
+  /maps:
+    put:
+      description: create the map if not exists, update otherwise
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/map"
+      responses:
+        200:
+          description: success, map the player with all information available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/map"
+
+components:
+  schemas:
+    record:
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type: integer
+        map_uid:
+          type: string
+        player_login:
+          type: string
+        created_at:
+          $ref: "#/components/schemas/date-time"
+        updated_at:
+          $ref: "#/components/schemas/date-time"
+      required:
+        - score
+        - map_uid
+        - player_login
+    player:
+      type: object
+      properties:
+        login:
+          type: string
+        nick:
+          type: string
+        banned:
+          type: boolean
+        auto_upload_replay:
+          type: boolean
+        created_at:
+          $ref: "#/components/schemas/date-time"
+        updated_at:
+          $ref: "#/components/schemas/date-time"
+      required:
+        - login
+        - nick
+    map:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        created_at:
+          $ref: "#/components/schemas/date-time"
+        updated_at:
+          $ref: "#/components/schemas/date-time"
+      required:
+        - uid
+        - name
+    date-time:
+      type: string
+      format: date-time
+      description: Date and time in ISO 8601
+      example: 2012-01-18T11:45:00+01:00 # todo
