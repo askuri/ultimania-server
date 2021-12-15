@@ -6,14 +6,14 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Record extends Model
+class Map extends Model
 {
     use HasFactory;
 
     /**
      * The primary key associated with the table.
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'uid';
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -28,7 +28,11 @@ class Record extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['id', 'player_login', 'map_uid', 'score'];
+    protected $fillable = ['uid', 'name'];
+
+    protected $attributes = [
+        'name' => 'Unkown',
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.
@@ -49,7 +53,8 @@ class Record extends Model
         return $this->updated_at->getTimestamp();
     }
 
-    public function player() {
-        return $this->belongsTo(Player::class, 'player_login', 'login');
+    public function records() {
+        return $this->hasMany(Record::class, 'map_uid', 'uid');
     }
+
 }

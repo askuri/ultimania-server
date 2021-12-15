@@ -15,15 +15,13 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('player_id');
-            $table->string('map_id');
-            $table->boolean('auto_upload_replay');
-            $table->boolean('banned');
+            $table->string('player_login');
+            $table->string('map_uid');
             $table->integer('score', false, true);
             $table->timestamps();
 
-            $table->foreign('player_id')->references('id')->on('players');
-            $table->foreign('map_id')->references('id')->on('maps');
+            $table->foreign('player_login')->references('login')->on('players');
+            $table->foreign('map_uid')->references('uid')->on('maps');
         });
     }
 

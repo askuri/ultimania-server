@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Ramsey\Uuid\Uuid;
 
 class RecordFactory extends Factory
 {
@@ -14,8 +15,18 @@ class RecordFactory extends Factory
      */
     public function definition()
     {
+        /*
+        $table->string('id')->primary();
+        $table->string('player_login');
+        $table->string('map_uid');
+        $table->integer('score', false, true);
+        $table->timestamps();*/
+
         return [
-            'id'
+            'id' => $this->faker->uuid(),
+            'player_login' => $this->faker->userName,
+            'map_uid' => $this->faker->uuid,
+            'score' => $this->faker->numberBetween(1, 1000),
         ];
     }
 }

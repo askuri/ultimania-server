@@ -5,15 +5,16 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
-class Record extends Model
+class Player extends Model
 {
     use HasFactory;
 
     /**
      * The primary key associated with the table.
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'login';
 
     /**
      * Indicates if the model's ID is auto-incrementing.
@@ -28,7 +29,19 @@ class Record extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['id', 'player_login', 'map_uid', 'score'];
+    protected $fillable = [
+        'login',
+        'nick',
+        'score',
+        'banned', // dangerous, should not be here
+        'auto_upload_replay'
+    ];
+
+    protected $attributes = [
+        'nick' => 'Unkown',
+        'banned' => false,
+        'auto_upload_replay' => true,
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.
@@ -49,7 +62,20 @@ class Record extends Model
         return $this->updated_at->getTimestamp();
     }
 
-    public function player() {
-        return $this->belongsTo(Player::class, 'player_login', 'login');
+    /**
+     * Make a player that serves as a fallback, if a record should be created while
+     * the corresponding user doesn't exist.
+     *
+     * @param string $login
+     * @return void
+     */
+    public static function makeEmptyDefaultPlayer(string $login): Player { // todo remove
+        $player = new Player();
+        $player->login = $login;
+        $player->nick = 'Unkown';
+        $player->banned = false;
+        $player->auto_upload_replay = true;
+        return $player;
     }
+
 }
