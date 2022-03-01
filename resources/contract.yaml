@@ -17,8 +17,13 @@ paths:
       parameters:
         - name: uid
           in: path
+          required: true
+          schema:
+            type: string
         - name: limit
           in: query
+          schema:
+            type: integer
       responses:
         200:
           description: success
@@ -30,6 +35,12 @@ paths:
                   $ref: "#/components/schemas/record_with_player"
   /records/{id}/replay:
     get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Replay.Gbx file content (binary)
@@ -39,6 +50,12 @@ paths:
                 type: string
                 format: binary
     post:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/octet-stream:
@@ -79,7 +96,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/player"
-      responses:
         201:
           description: player created, did not exist before
           content:
