@@ -1,11 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Map;
-use App\Models\Record;
 use App\Models\Player;
-use Database\Factories\RecordFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -13,7 +11,7 @@ class RecordControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUpdate()
+    public function testUpdateOrCreateWorks()
     {
         $player = Player::factory()->create();
         $map1 = Map::factory()->create();
@@ -60,5 +58,9 @@ class RecordControllerTest extends TestCase
         $response->assertStatus(201);
         $response->assertJson($recordToSubmit);
         $response->assertJsonStructure(['id']);
+    }
+
+    public function testRecordOfBannedPlayerNotSaved() {
+        // todo
     }
 }

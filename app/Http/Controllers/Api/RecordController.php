@@ -7,17 +7,10 @@ use App\Models\Map;
 use App\Models\Player;
 use App\Models\Record;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Ramsey\Uuid\Uuid;
 
 class RecordController extends Controller
 {
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
     public function updateOrCreate(Request $request)
     {
         $requestData = $request->validate([

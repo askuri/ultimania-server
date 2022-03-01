@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\RecordController;
 use App\Http\Controllers\Api\MapsRecordsController;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v5')->group(function () {
     Route::put('records', [RecordController::class, 'updateOrCreate']);
     Route::get('maps/{uid}/records', [MapsRecordsController::class, 'index']);
+    Route::put('players', [PlayerController::class, 'updateOrCreate']);
 });

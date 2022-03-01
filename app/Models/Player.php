@@ -5,7 +5,6 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
 
 class Player extends Model
 {
@@ -64,7 +63,7 @@ class Player extends Model
 
     /**
      * Make a player that serves as a fallback, if a record should be created while
-     * the corresponding user doesn't exist.
+     * the corresponding player doesn't exist.
      *
      * @param string $login
      * @return void

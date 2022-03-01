@@ -74,7 +74,14 @@ paths:
               $ref: "#/components/schemas/player"
       responses:
         200:
-          description: success, returns the player with all information available
+          description: player information updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/player"
+      responses:
+        201:
+          description: player created, did not exist before
           content:
             application/json:
               schema:
