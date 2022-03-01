@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MapController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\RecordController;
 use App\Http\Controllers\Api\MapsRecordsController;
@@ -26,4 +27,5 @@ Route::prefix('v5')->group(function () {
     Route::put('records', [RecordController::class, 'updateOrCreate']);
     Route::get('maps/{uid}/records', [MapsRecordsController::class, 'index']);
     Route::put('players', [PlayerController::class, 'updateOrCreate']);
+    Route::put('maps', [MapController::class, 'updateOrCreate']);
 });
