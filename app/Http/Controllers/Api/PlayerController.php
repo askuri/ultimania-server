@@ -19,7 +19,7 @@ class PlayerController extends Controller
 
         return Player::updateOrCreate(
             ['login' => $requestData['login']],
-            ['nick' => $requestData['nick'], 'id' => Uuid::uuid4()]
+            ['nick' => $requestData['nick'], 'auto_upload_replay' => $requestData['auto_upload_replay']]
         );
     }
 }
