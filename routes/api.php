@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\MapController;
 use App\Http\Controllers\Api\PlayerController;
 use App\Http\Controllers\Api\RecordController;
 use App\Http\Controllers\Api\MapsRecordsController;
+use App\Http\Controllers\Api\RecordReplayController;
 use Illuminate\Support\Facades\Route;
 
 /*
