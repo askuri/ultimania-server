@@ -29,4 +29,6 @@ Route::prefix('v5')->group(function () {
     Route::get('maps/{uid}/records', [MapsRecordsController::class, 'index']);
     Route::put('players', [PlayerController::class, 'updateOrCreate']);
     Route::put('maps', [MapController::class, 'updateOrCreate']);
+    Route::get('records/{id}/replay', [RecordReplayController::class, 'show']);
+    Route::post('records/{id}/replay', [RecordReplayController::class, 'store']);
 });

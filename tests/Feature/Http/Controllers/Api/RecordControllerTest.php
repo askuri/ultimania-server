@@ -63,4 +63,8 @@ class RecordControllerTest extends TestCase
     public function testRecordOfBannedPlayerNotSaved() {
         // todo
     }
+
+    public function testReplayDeletedIfRecordUpdated() {
+        // todo
+    }
 }

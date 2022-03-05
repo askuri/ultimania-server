@@ -15,13 +15,6 @@ class RecordFactory extends Factory
      */
     public function definition()
     {
-        /*
-        $table->string('id')->primary();
-        $table->string('player_login');
-        $table->string('map_uid');
-        $table->integer('score', false, true);
-        $table->timestamps();*/
-
         return [
             'id' => $this->faker->uuid(),
             'player_login' => $this->faker->userName,

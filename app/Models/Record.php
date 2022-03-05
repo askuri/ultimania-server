@@ -52,4 +52,8 @@ class Record extends Model
     public function player() {
         return $this->belongsTo(Player::class, 'player_login', 'login');
     }
+
+    public function map() {
+        return $this->belongsTo(Map::class, 'map_uid', 'uid');
+    }
 }
