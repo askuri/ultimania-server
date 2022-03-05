@@ -21,4 +21,13 @@ class PlayerFactory extends Factory
             'auto_upload_replay' => true,
         ];
     }
+
+    public function banned()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'banned' => true,
+            ];
+        });
+    }
 }

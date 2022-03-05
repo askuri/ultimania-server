@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\BannedPlayerException;
 use App\Http\Controllers\Controller;
 use App\Models\Map;
 use App\Models\Player;
@@ -11,6 +12,9 @@ use Ramsey\Uuid\Uuid;
 
 class RecordController extends Controller
 {
+    /**
+     * @throws BannedPlayerException
+     */
     public function updateOrCreate(Request $request)
     {
         $requestData = $request->validate([
@@ -20,7 +24,7 @@ class RecordController extends Controller
         ]);
 
         // fallback in case for some reason the player was previously not created (should not occur)
-        Player::firstOrCreate(
+        $player = Player::firstOrCreate(
             ['login' => $requestData['player_login']],
             (new Player(['login' => $requestData['player_login']]))->toArray()
         );
@@ -28,6 +32,10 @@ class RecordController extends Controller
             ['uid' => $requestData['map_uid']],
             (new Map(['uid' => $requestData['map_uid']]))->toArray()
         );
+
+        if ($player->banned === true) {
+            throw new BannedPlayerException();
+        }
 
         return Record::updateOrCreate(
             ['player_login' => $requestData['player_login'], 'map_uid' => $requestData['map_uid']],

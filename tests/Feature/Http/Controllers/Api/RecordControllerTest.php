@@ -61,7 +61,25 @@ class RecordControllerTest extends TestCase
     }
 
     public function testRecordOfBannedPlayerNotSaved() {
-        // todo
+
+        $player = Player::factory()
+            ->banned()
+            ->create();
+        $map1 = Map::factory()->create();
+        $recordToSubmit = [
+            'player_login' => $player->login,
+            'map_uid' => $map1->uid,
+            'score' => 333,
+        ];
+
+        $response = $this->put('/api/v5/records', $recordToSubmit);
+
+        $response->assertForbidden();
+        $response->assertJson([
+            'error' => [
+                'code' => 'BANNED_PLAYER',
+            ]
+        ]);
     }
 
     public function testReplayDeletedIfRecordUpdated() {

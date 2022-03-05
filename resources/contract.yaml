@@ -93,6 +93,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/record"
+        403:
+          description: Player is banned, record not saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error-response"
   /players:
     put:
       description: create the player if not exists, update otherwise
@@ -219,6 +225,7 @@ components:
               type: string
               enum:
               - RECORD_NOT_FOUND
+              - BANNED_PLAYER
             message:
               type: string
           required:

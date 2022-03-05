@@ -42,6 +42,11 @@ class Player extends Model
         'auto_upload_replay' => true,
     ];
 
+    protected $casts = [
+        'banned' => 'boolean',
+        'auto_upload_replay' => 'boolean',
+    ];
+
     /**
      * Prepare a date for array / JSON serialization.
      *
