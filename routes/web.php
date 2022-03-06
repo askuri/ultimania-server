@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\OpenApiController;
+use App\Http\Controllers\SwaggerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/swagger', [SwaggerController::class, 'show']);
+Route::get('/openapi', [OpenApiController::class, 'show']);
