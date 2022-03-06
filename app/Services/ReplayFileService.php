@@ -3,27 +3,37 @@
 namespace App\Services;
 
 use App\Models\Record;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 
 class ReplayFileService {
 
+    private Filesystem $filesystem;
+
+    private string $storage;
+
+    public function __construct() {
+        $this->storage = config('app.replays_filesystem');
+        $this->filesystem = Storage::disk($this->storage);
+    }
+
     public function retrieveReplay(Record $forRecord): ?string {
-        return Storage::disk('replays')->get($this->getFilename($forRecord));
+        return $this->filesystem->get($this->getFilename($forRecord));
     }
 
     /**
      * Check if a replay exists for the given record. Score of the record may differ.
      */
     public function replayExists(Record $forRecord): bool {
-        return Storage::disk('replays')->exists($this->getFilename($forRecord));
+        return $this->filesystem->exists($this->getFilename($forRecord));
     }
 
     public function storeReplay(string $replayContent, Record $forRecord): void {
-        Storage::disk('replays')->put($this->getFilename($forRecord), $replayContent);
+        $this->filesystem->put($this->getFilename($forRecord), $replayContent);
     }
 
     public function deleteReplayIfExists(Record $forRecord): void {
-        Storage::disk('replays')->delete($this->getFilename($forRecord));
+        $this->filesystem->delete($this->getFilename($forRecord));
     }
 
     /**
@@ -32,7 +42,7 @@ class ReplayFileService {
      * or this method is called again.
      */
     public function useFakeDiskAndClearIt(): void {
-        Storage::fake('replays');
+        Storage::fake($this->storage);
     }
 
     /**

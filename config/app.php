@@ -2,6 +2,8 @@
 
 return [
 
+    'replays_filesystem' => env('REPLAYS_FILESYSTEM'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => 'local',
 
     /*
     |--------------------------------------------------------------------------
@@ -51,6 +51,21 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+        ],
+
+        'replays_local' => [
+            'driver' => 'local',
+            'root' => storage_path('app/replays'),
+        ],
+
+        'replays_sftp' => [
+            'driver' => 'sftp',
+            'host' => env('REPLAYS_SFTP_HOST'),
+            'username' => env('REPLAYS_SFTP_USERNAME'),
+            'password' => env('REPLAYS_SFTP_PASSWORD'),
+            'port' => env('REPLAYS_SFTP_PORT', 22),
+            'root' => env('REPLAYS_SFTP_ROOT', ''),
+            'timeout' => 5,
         ],
 
     ],
