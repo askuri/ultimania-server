@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Exceptions\BannedPlayerException;
+use App\Exceptions\RecordNotFoundException;
 use App\Http\Controllers\Api\RecordReplayController;
 use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -40,7 +40,7 @@ class RecordReplayControllerTest extends TestCase
     {
         $requestMock = $this->makePostRequestMock();
 
-        $this->expectException(BannedPlayerException::class);
+        $this->expectException(RecordNotFoundException::class);
         $this->controller->store($requestMock, 'does_not_exist');
     }
 
@@ -55,8 +55,9 @@ class RecordReplayControllerTest extends TestCase
         ]);
     }
 
+
     public function testSavingNonReplayFileFails() {
-        // todo
+        $this->markTestSkipped('not implemented yet');
     }
 
     /**
