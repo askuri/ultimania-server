@@ -66,20 +66,4 @@ class Player extends Model
         return $this->updated_at->getTimestamp();
     }
 
-    /**
-     * Make a player that serves as a fallback, if a record should be created while
-     * the corresponding player doesn't exist.
-     *
-     * @param string $login
-     * @return void
-     */
-    public static function makeEmptyDefaultPlayer(string $login): Player { // todo remove
-        $player = new Player();
-        $player->login = $login;
-        $player->nick = 'Unkown';
-        $player->banned = false;
-        $player->auto_upload_replay = true;
-        return $player;
-    }
-
 }
