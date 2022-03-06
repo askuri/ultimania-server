@@ -39,7 +39,7 @@ class RecordController extends Controller
 
         return Record::updateOrCreate(
             ['player_login' => $requestData['player_login'], 'map_uid' => $requestData['map_uid']],
-            ['score' => $requestData['score'], 'id' => Uuid::uuid4()] // todo id is kept currently
+            ['score' => $requestData['score'], 'id' => Uuid::uuid4()]
         );
     }
 }

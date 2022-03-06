@@ -10,7 +10,7 @@ info:
   contact:
     email: enwi2@t-online.de
 servers:
-  - url: '/api/v5' # todo
+  - url: '/api/v5'
 paths:
   /maps/{uid}/records:
     get:
