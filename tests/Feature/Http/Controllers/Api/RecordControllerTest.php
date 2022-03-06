@@ -2,16 +2,28 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\RecordReplayController;
 use App\Models\Map;
 use App\Models\Player;
+use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\TestData;
 
 class RecordControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUpdateOrCreateWorks()
+    private ReplayFileService $replayFileService;
+
+    public function setUp(): void {
+        parent::setUp();
+
+        $this->replayFileService = new ReplayFileService();
+        $this->replayFileService->useFakeDiskAndClearIt();
+    }
+
+    public function testCreateWorks()
     {
         $player = Player::factory()->create();
         $map1 = Map::factory()->create();
@@ -26,6 +38,38 @@ class RecordControllerTest extends TestCase
         $response->assertStatus(201);
         $response->assertJson($recordToSubmit);
         $response->assertJsonStructure(['id']);
+    }
+
+    public function testUpdateWorks()
+    {
+        $originalRecord = TestData::record()->create();
+
+        $recordToSubmit = [
+            'player_login' => $originalRecord->player->login,
+            'map_uid' => $originalRecord->map->uid,
+            'score' => $originalRecord->score + 333,
+        ];
+
+        $response = $this->put('/api/v5/records', $recordToSubmit);
+
+        $response->assertStatus(200);
+        $response->assertJson($recordToSubmit);
+    }
+
+    public function testRecordNotUpdatedIfScoreIsWorse()
+    {
+        $originalRecord = TestData::record()->create();
+
+        $recordToSubmit = [
+            'player_login' => $originalRecord->player->login,
+            'map_uid' => $originalRecord->map->uid,
+            'score' => $originalRecord->score - 1,
+        ];
+
+        $response = $this->put('/api/v5/records', $recordToSubmit);
+
+        $response->assertStatus(200);
+        $response->assertJson([ 'score' => $originalRecord->score ]);
     }
 
     public function testUpdateWithUnknownPlayer()
@@ -83,6 +127,17 @@ class RecordControllerTest extends TestCase
     }
 
     public function testReplayDeletedIfRecordUpdated() {
-        // todo
+        $record = TestData::record()->create();
+        $this->replayFileService->storeReplay(TestData::REPLAY_CONTENT, $record);
+
+        $updatedRecordToSubmit = [
+            'player_login' => $record->player->login,
+            'map_uid' => $record->map->uid,
+            'score' => $record->score + 345,
+        ];
+
+        $this->put('/api/v5/records', $updatedRecordToSubmit);
+
+        $this->assertFalse($this->replayFileService->replayExists($record));
     }
 }

@@ -88,7 +88,13 @@ paths:
               $ref: "#/components/schemas/record"
       responses:
         200:
-          description: success
+          description: Record existed. Updated it if the score has improved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/record"
+        201:
+          description: Record created, did not exist before.
           content:
             application/json:
               schema:

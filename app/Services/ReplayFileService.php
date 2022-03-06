@@ -11,6 +11,9 @@ class ReplayFileService {
         return Storage::disk('replays')->get($this->getFilename($forRecord));
     }
 
+    /**
+     * Check if a replay exists for the given record. Score of the record may differ.
+     */
     public function replayExists(Record $forRecord): bool {
         return Storage::disk('replays')->exists($this->getFilename($forRecord));
     }

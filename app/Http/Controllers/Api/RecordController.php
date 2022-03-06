@@ -7,39 +7,79 @@ use App\Http\Controllers\Controller;
 use App\Models\Map;
 use App\Models\Player;
 use App\Models\Record;
+use App\Services\ReplayFileService;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 
 class RecordController extends Controller
 {
+
+    private ReplayFileService $replayFileService;
+
+    public function __construct(ReplayFileService $replayFileService) {
+        $this->replayFileService = $replayFileService;
+    }
+
     /**
      * @throws BannedPlayerException
      */
     public function updateOrCreate(Request $request)
     {
-        $requestData = $request->validate([
-            'player_login'  => 'string|required',
-            'map_uid'       => 'string|required',
-            'score'         => 'integer|required|min:1',
-        ]);
+        $newRecord = $this->validateRecordSubmissionAndReturnIt($request);
 
-        // fallback in case for some reason the player was previously not created (should not occur)
-        $player = Player::firstOrCreate(
-            ['login' => $requestData['player_login']],
-            (new Player(['login' => $requestData['player_login']]))->toArray()
+        // fallback in case for some reason the player or map was previously not created (should not occur)
+        $player = $this->ensurePlayerExists($newRecord['player_login']);
+        $this->ensureMapExists($newRecord['map_uid']);
+
+        $this->bailOutIfPlayerIsBanned($player);
+
+        $recordModel = $this->createRecordOrReturnExistingOne($newRecord);
+
+        if ($newRecord['score'] > $recordModel->score) {
+            $recordModel->score = $newRecord['score'];
+            $recordModel->save();
+
+            $this->replayFileService->deleteReplayIfExists($recordModel);
+        }
+
+        return $recordModel;
+    }
+
+    private function ensurePlayerExists($player_login) {
+        return Player::firstOrCreate(
+            ['login' => $player_login],
+            (new Player(['login' => $player_login]))->toArray()
         );
+    }
+
+    private function ensureMapExists($map_uid): void {
         Map::firstOrCreate(
-            ['uid' => $requestData['map_uid']],
-            (new Map(['uid' => $requestData['map_uid']]))->toArray()
+            ['uid' => $map_uid],
+            (new Map(['uid' => $map_uid]))->toArray()
         );
+    }
 
+    private function validateRecordSubmissionAndReturnIt(Request $request): array {
+        return $request->validate([
+            'player_login' => 'string|required',
+            'map_uid' => 'string|required',
+            'score' => 'integer|required|min:1',
+        ]);
+    }
+
+    /**
+     * @throws BannedPlayerException
+     */
+    private function bailOutIfPlayerIsBanned($player): void {
         if ($player->banned === true) {
             throw new BannedPlayerException();
         }
+    }
 
-        return Record::updateOrCreate(
-            ['player_login' => $requestData['player_login'], 'map_uid' => $requestData['map_uid']],
-            ['score' => $requestData['score'], 'id' => Uuid::uuid4()]
+    private function createRecordOrReturnExistingOne(array $newRecord) {
+        return Record::firstOrCreate(
+            ['player_login' => $newRecord['player_login'], 'map_uid' => $newRecord['map_uid']],
+            ['score' => $newRecord['score'], 'id' => Uuid::uuid4()]
         );
     }
 }

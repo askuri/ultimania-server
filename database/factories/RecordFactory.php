@@ -19,7 +19,7 @@ class RecordFactory extends Factory
             'id' => $this->faker->uuid(),
             'player_login' => $this->faker->userName,
             'map_uid' => $this->faker->uuid,
-            'score' => $this->faker->numberBetween(1, 1000),
+            'score' => 300,
         ];
     }
 }
