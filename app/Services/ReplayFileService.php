@@ -8,32 +8,29 @@ use Illuminate\Support\Facades\Storage;
 
 class ReplayFileService {
 
-    private Filesystem $filesystem;
-
     private string $storage;
 
     public function __construct() {
         $this->storage = config('app.replays_filesystem');
-        $this->filesystem = Storage::disk($this->storage);
     }
 
     public function retrieveReplay(Record $forRecord): ?string {
-        return $this->filesystem->get($this->getFilename($forRecord));
+        return $this->filesystem()->get($this->getFilename($forRecord));
     }
 
     /**
      * Check if a replay exists for the given record. Score of the record may differ.
      */
     public function replayExists(Record $forRecord): bool {
-        return $this->filesystem->exists($this->getFilename($forRecord));
+        return $this->filesystem()->exists($this->getFilename($forRecord));
     }
 
     public function storeReplay(string $replayContent, Record $forRecord): void {
-        $this->filesystem->put($this->getFilename($forRecord), $replayContent);
+        $this->filesystem()->put($this->getFilename($forRecord), $replayContent);
     }
 
     public function deleteReplayIfExists(Record $forRecord): void {
-        $this->filesystem->delete($this->getFilename($forRecord));
+        $this->filesystem()->delete($this->getFilename($forRecord));
     }
 
     /**
@@ -51,5 +48,9 @@ class ReplayFileService {
      */
     private function getFilename(Record $forRecord): string {
         return $forRecord->id;
+    }
+
+    private function filesystem(): Filesystem {
+        return Storage::disk($this->storage);
     }
 }
