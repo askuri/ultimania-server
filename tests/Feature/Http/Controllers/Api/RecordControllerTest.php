@@ -128,7 +128,7 @@ class RecordControllerTest extends TestCase
 
     public function testReplayDeletedIfRecordUpdated() {
         $record = TestData::record()->create();
-        $this->replayFileService->storeReplay(TestData::REPLAY_CONTENT, $record);
+        $this->replayFileService->storeReplay(TestData::VALID_REPLAY_CONTENT, $record);
 
         $updatedRecordToSubmit = [
             'player_login' => $record->player->login,

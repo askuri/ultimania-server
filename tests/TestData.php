@@ -8,7 +8,8 @@ use App\Models\Record;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TestData {
-    public const REPLAY_CONTENT = 'some_content';
+    public const VALID_REPLAY_CONTENT = 'GBX_some_content';
+    public const INVALID_REPLAY_CONTENT = 'invalid_content';
 
     /**
      * Generate a record and associate a player and a map with it.

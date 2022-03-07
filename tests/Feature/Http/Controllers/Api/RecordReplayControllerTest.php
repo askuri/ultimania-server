@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Exceptions\InvalidReplayException;
 use App\Exceptions\RecordNotFoundException;
 use App\Http\Controllers\Api\RecordReplayController;
 use App\Services\ReplayFileService;
@@ -27,18 +28,18 @@ class RecordReplayControllerTest extends TestCase
     public function testSavingAndRetrievingWorks()
     {
         $record = TestData::record()->create();
-        $requestMock = $this->makePostRequestMock();
+        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
 
         $this->controller->store($requestMock, $record->id);
 
         $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
         $getResponse->assertOk();
-        $getResponse->assertSee(TestData::REPLAY_CONTENT);
+        $getResponse->assertSee(TestData::VALID_REPLAY_CONTENT);
     }
 
     public function testSavingFailsIfIdUnknown()
     {
-        $requestMock = $this->makePostRequestMock();
+        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
 
         $this->expectException(RecordNotFoundException::class);
         $this->controller->store($requestMock, 'does_not_exist');
@@ -57,16 +58,20 @@ class RecordReplayControllerTest extends TestCase
 
 
     public function testSavingNonReplayFileFails() {
-        $this->markTestSkipped('not implemented yet');
+        $record = TestData::record()->create();
+        $requestMock = $this->makePostRequestMock(TestData::INVALID_REPLAY_CONTENT);
+
+        $this->expectException(InvalidReplayException::class);
+        $this->controller->store($requestMock, $record->id);
     }
 
     /**
      * Laravel test's post method don't allow sending binary content, only arrays.
      * Therefore, we have to test the controller directly.
      */
-    private function makePostRequestMock() {
+    private function makePostRequestMock(string $replayContent) {
         $requestMock = \Mockery::mock(Request::class);
-        $requestMock->allows()->getContent(false)->andReturns(TestData::REPLAY_CONTENT);
+        $requestMock->allows()->getContent(false)->andReturns($replayContent);
         return $requestMock;
     }
 }

@@ -22,16 +22,16 @@ class ReplayFileServiceTest extends TestCase {
     public function testStoreAndRetrieveReplay() {
         $record = TestData::record()->make();
 
-        $this->service->storeReplay(TestData::REPLAY_CONTENT, $record);
+        $this->service->storeReplay(TestData::VALID_REPLAY_CONTENT, $record);
         $retrievedReplay = $this->service->retrieveReplay($record);
 
-        $this->assertEquals(TestData::REPLAY_CONTENT, $retrievedReplay);
+        $this->assertEquals(TestData::VALID_REPLAY_CONTENT, $retrievedReplay);
     }
 
     public function testStoreReplayAndReplayExists() {
         $record = TestData::record()->make();
 
-        $this->service->storeReplay(TestData::REPLAY_CONTENT, $record);
+        $this->service->storeReplay(TestData::VALID_REPLAY_CONTENT, $record);
 
         $this->assertTrue($this->service->replayExists($record));
     }
@@ -39,7 +39,7 @@ class ReplayFileServiceTest extends TestCase {
     public function testStoreAndDeleteReplayIfExists() {
         $record = TestData::record()->make();
 
-        $this->service->storeReplay(TestData::REPLAY_CONTENT, $record);
+        $this->service->storeReplay(TestData::VALID_REPLAY_CONTENT, $record);
         $this->service->deleteReplayIfExists($record);
 
         $this->assertFalse($this->service->replayExists($record));

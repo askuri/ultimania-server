@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\InvalidReplayException;
 use App\Exceptions\RecordNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Record;
@@ -18,7 +19,7 @@ class RecordReplayController extends Controller
     }
 
     /**
-     * @throws RecordNotFoundException
+     * @throws RecordNotFoundException|InvalidReplayException
      */
     public function store(Request $request, string $id) {
         $replay = $request->getContent(false);

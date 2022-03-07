@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidReplayException;
 use App\Models\Record;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,14 @@ class ReplayFileService {
         return $this->filesystem()->exists($this->getFilename($forRecord));
     }
 
+    /**
+     * @throws InvalidReplayException
+     */
     public function storeReplay(string $replayContent, Record $forRecord): void {
+        if (!$this->isReplayValid($replayContent)) {
+            throw new InvalidReplayException('The replay you submitted seems to be invalid');
+        }
+
         $this->filesystem()->put($this->getFilename($forRecord), $replayContent);
     }
 
@@ -48,6 +56,10 @@ class ReplayFileService {
      */
     private function getFilename(Record $forRecord): string {
         return $forRecord->id;
+    }
+
+    private function isReplayValid(string $replay): bool {
+        return str_starts_with($replay, 'GBX');
     }
 
     private function filesystem(): Filesystem {
