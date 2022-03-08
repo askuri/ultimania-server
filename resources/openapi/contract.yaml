@@ -6,6 +6,8 @@ info:
 
     The design is made in a way that allows a player to have more than one record per map. Records and their replays MAY
     be kept.
+
+    TODO explain the general concept of how the API is used. Sending data to players and map endpoint first, then record ...
   version: 5.0.0
   contact:
     email: enwi2@t-online.de
@@ -33,6 +35,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/record_with_player"
+        404:
+          description: No map found for given UID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error-response"
   /records/{id}/replay:
     get:
       parameters:
@@ -237,6 +245,7 @@ components:
               type: string
               enum:
               - RECORD_NOT_FOUND
+              - MAP_NOT_FOUND
               - BANNED_PLAYER
               - INVALID_REPLAY
             message:

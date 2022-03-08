@@ -53,4 +53,14 @@ class MapsRecordsControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonCount(2);
     }
+
+    public function testNotFound() {
+        $response = $this->get('/api/v5/maps/doesnotexist/records');
+        $response->assertNotFound();
+        $response->assertJson([
+            'error' => [
+                'code' => 'MAP_NOT_FOUND'
+            ]
+        ]);
+    }
 }
