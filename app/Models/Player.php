@@ -33,18 +33,18 @@ class Player extends Model
         'nick',
         'score',
         'banned', // dangerous, should not be here
-        'auto_upload_replay'
+        'allow_replay_download'
     ];
 
     protected $attributes = [
         'nick' => 'Unkown',
         'banned' => false,
-        'auto_upload_replay' => true,
+        'allow_replay_download' => true,
     ];
 
     protected $casts = [
         'banned' => 'boolean',
-        'auto_upload_replay' => 'boolean',
+        'allow_replay_download' => 'boolean',
     ];
 
     /**

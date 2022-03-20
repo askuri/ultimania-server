@@ -30,7 +30,7 @@ class MapsRecordsControllerTest extends TestCase
                 'login' => $map->records[0]->player->login,
                 'nick' => $map->records[0]->player->nick,
                 'banned' => $map->records[0]->player->banned,
-                'auto_upload_replay' => $map->records[0]->player->auto_upload_replay,
+                'allow_replay_download' => $map->records[0]->player->allow_replay_download,
                 'created_at' => $map->records[0]->player->getSerializedCreatedAt(),
                 'updated_at' => $map->records[0]->player->getSerializedUpdatedAt(),
             ],

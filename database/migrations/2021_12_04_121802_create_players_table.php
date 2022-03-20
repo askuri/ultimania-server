@@ -17,7 +17,7 @@ class CreatePlayersTable extends Migration
             $table->string('login')->primary();
             $table->string('nick');
             $table->boolean('banned');
-            $table->boolean('auto_upload_replay');
+            $table->boolean('allow_replay_download');
             $table->timestamps();
         });
     }

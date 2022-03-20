@@ -207,7 +207,7 @@ components:
           type: string
         banned:
           type: boolean
-        auto_upload_replay:
+        allow_replay_download:
           type: boolean
         created_at:
           $ref: "#/components/schemas/date-time"

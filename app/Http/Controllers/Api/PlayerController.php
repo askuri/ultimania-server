@@ -14,12 +14,12 @@ class PlayerController extends Controller
         $requestData = $request->validate([
             'login'  => 'string|required',
             'nick' => 'string|required',
-            'auto_upload_replay' => 'boolean|required',
+            'allow_replay_download' => 'boolean|required',
         ]);
 
         return Player::updateOrCreate(
             ['login' => $requestData['login']],
-            ['nick' => $requestData['nick'], 'auto_upload_replay' => $requestData['auto_upload_replay']]
+            ['nick' => $requestData['nick'], 'allow_replay_download' => $requestData['allow_replay_download']]
         );
     }
 }

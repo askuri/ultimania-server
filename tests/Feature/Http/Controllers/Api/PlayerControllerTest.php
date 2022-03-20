@@ -16,7 +16,7 @@ class PlayerControllerTest extends TestCase
         $playerToSubmit = [
             'login' => $player->login,
             'nick' => $player->nick,
-            'auto_upload_replay' => $player->auto_upload_replay,
+            'allow_replay_download' => $player->allow_replay_download,
         ];
 
         $response = $this->put('/api/v5/players', $playerToSubmit);
@@ -31,7 +31,7 @@ class PlayerControllerTest extends TestCase
         $updatedPlayerToSubmit = [
             'login' => $player->login,
             'nick' => 'updated nickname',
-            'auto_upload_replay' => ! $player->auto_upload_replay,
+            'allow_replay_download' => ! $player->allow_replay_download,
         ];
 
         $response = $this->put('/api/v5/players', $updatedPlayerToSubmit);

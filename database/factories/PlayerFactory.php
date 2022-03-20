@@ -18,7 +18,7 @@ class PlayerFactory extends Factory
             'login' => $this->faker->userName,
             'nick' => $this->faker->name,
             'banned' => false,
-            'auto_upload_replay' => true,
+            'allow_replay_download' => true,
         ];
     }
 

@@ -25,6 +25,7 @@ class RecordController extends Controller
      */
     public function updateOrCreate(Request $request)
     {
+        $request->wantsJson();
         $newRecord = $this->validateRecordSubmissionAndReturnIt($request);
 
         // fallback in case for some reason the player or map was previously not created (should not occur)
