@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Manialinks\ViewReplayController;
 use App\Http\Controllers\OpenApiController;
 use App\Http\Controllers\SwaggerController;
 use Illuminate\Support\Facades\Route;
@@ -17,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/swagger', [SwaggerController::class, 'show']);
 Route::get('/openapi', [OpenApiController::class, 'show']);
+Route::get('/manialinks/view_replay', [ViewReplayController::class, 'show']);
