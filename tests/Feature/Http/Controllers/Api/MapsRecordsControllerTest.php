@@ -38,6 +38,7 @@ class MapsRecordsControllerTest extends TestCase
             'score' => $map->records[0]->score,
             'created_at' => $map->records[0]->getSerializedCreatedAt(),
             'updated_at' => $map->records[0]->getSerializedUpdatedAt(),
+            'replay_available' => false,
         ]]);
     }
 

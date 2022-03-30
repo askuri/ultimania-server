@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ReplayFileService;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     use HasFactory;
+
+    private ReplayFileService $replayFileService;
 
     /**
      * The primary key associated with the table.
@@ -29,6 +32,8 @@ class Record extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = ['id', 'player_login', 'map_uid', 'score'];
+
+    protected $appends = ['replay_available'];
 
     /**
      * Prepare a date for array / JSON serialization.
@@ -55,5 +60,9 @@ class Record extends Model
 
     public function map() {
         return $this->belongsTo(Map::class, 'map_uid', 'uid');
+    }
+
+    public function getReplayAvailableAttribute(): bool {
+        return resolve(ReplayFileService::class)->replayExists($this) && $this->player->allow_replay_download;
     }
 }

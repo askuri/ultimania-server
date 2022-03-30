@@ -37,6 +37,7 @@ class RecordControllerTest extends TestCase
 
         $response->assertStatus(201);
         $response->assertJson($recordToSubmit);
+        $response->assertJson(['replay_available' => false]);
         $response->assertJsonStructure(['id']);
     }
 

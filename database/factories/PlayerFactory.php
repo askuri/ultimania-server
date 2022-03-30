@@ -30,4 +30,13 @@ class PlayerFactory extends Factory
             ];
         });
     }
+
+    public function replay_download_forbidden()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'allow_replay_download' => false,
+            ];
+        });
+    }
 }

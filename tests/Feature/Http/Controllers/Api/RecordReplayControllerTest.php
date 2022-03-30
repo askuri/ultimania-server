@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 use App\Exceptions\InvalidReplayException;
 use App\Exceptions\RecordNotFoundException;
 use App\Http\Controllers\Api\RecordReplayController;
+use App\Models\Player;
 use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -56,6 +57,37 @@ class RecordReplayControllerTest extends TestCase
         ]);
     }
 
+    public function testRetrievingFailsIfReplayDownloadNotAllowed()
+    {
+        $record = TestData::record()
+            ->for(Player::factory()->replay_download_forbidden()->create())
+            ->create();
+        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+        $this->controller->store($requestMock, $record->id);
+
+        $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
+
+        $getResponse->assertNotFound();
+        $getResponse->assertJson([
+            'error' => [
+                'code' => 'REPLAY_NOT_FOUND',
+            ]
+        ]);
+    }
+
+    public function testRetrievingFailsIfNoReplayAvailable()
+    {
+        $record = TestData::record()->create();
+
+        $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
+
+        $getResponse->assertNotFound();
+        $getResponse->assertJson([
+            'error' => [
+                'code' => 'REPLAY_NOT_FOUND',
+            ]
+        ]);
+    }
 
     public function testSavingNonReplayFileFails() {
         $record = TestData::record()->create();
@@ -71,7 +103,7 @@ class RecordReplayControllerTest extends TestCase
      */
     private function makePostRequestMock(string $replayContent) {
         $requestMock = \Mockery::mock(Request::class);
-        $requestMock->allows()->getContent(false)->andReturns($replayContent);
+        $requestMock->allows()->getContent()->andReturns($replayContent);
         return $requestMock;
     }
 }

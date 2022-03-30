@@ -32,7 +32,7 @@ class Player extends Model
         'login',
         'nick',
         'score',
-        'banned', // dangerous, should not be here
+        'banned', // todo dangerous, should not be here
         'allow_replay_download'
     ];
 

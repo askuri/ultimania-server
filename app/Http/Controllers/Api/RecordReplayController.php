@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\InvalidReplayException;
 use App\Exceptions\RecordNotFoundException;
+use App\Exceptions\ReplayNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Record;
 use App\Services\ReplayFileService;
@@ -21,11 +22,11 @@ class RecordReplayController extends Controller
     /**
      * @throws RecordNotFoundException|InvalidReplayException
      */
-    public function store(Request $request, string $id) {
-        $replay = $request->getContent(false);
+    public function store(Request $request, string $recordId) {
+        $replay = $request->getContent();
 
         try {
-            $this->replayFileService->storeReplay($replay, Record::findOrFail($id));
+            $this->replayFileService->storeReplay($replay, Record::findOrFail($recordId));
         } catch (ModelNotFoundException) {
             throw new RecordNotFoundException();
         }
@@ -36,9 +37,16 @@ class RecordReplayController extends Controller
     /**
      * @throws RecordNotFoundException
      */
-    public function show(string $id) {
+    public function show(string $recordId) {
         try {
-            return $this->replayFileService->retrieveReplay(Record::findOrFail($id));
+            $record = Record::findOrFail($recordId);
+
+            if (!$record->getReplayAvailableAttribute()) {
+                throw new ReplayNotFoundException();
+            }
+
+            return $this->replayFileService->retrieveReplay($record);
+
         } catch (ModelNotFoundException) {
             throw new RecordNotFoundException();
         }
