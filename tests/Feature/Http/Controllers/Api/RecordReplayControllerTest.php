@@ -31,7 +31,8 @@ class RecordReplayControllerTest extends TestCase
         $record = TestData::record()->create();
         $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
 
-        $this->controller->store($requestMock, $record->id);
+        $storeResponse = $this->controller->store($requestMock, $record->id);
+        $this->assertTrue(json_decode($storeResponse->getContent())->replay_available);
 
         $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
         $getResponse->assertOk();

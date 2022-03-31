@@ -26,12 +26,13 @@ class RecordReplayController extends Controller
         $replay = $request->getContent();
 
         try {
-            $this->replayFileService->storeReplay($replay, Record::findOrFail($recordId));
+            $record = Record::findOrFail($recordId);
+            $this->replayFileService->storeReplay($replay, $record);
         } catch (ModelNotFoundException) {
             throw new RecordNotFoundException();
         }
 
-        return response('', 201);
+        return response(['replay_available' => $record->getReplayAvailableAttribute()], 201);
     }
 
     /**

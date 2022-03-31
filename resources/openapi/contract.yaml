@@ -82,6 +82,13 @@ paths:
       responses:
         201:
           description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  - name: replay_available
+                    type: boolean
         400:
           description: Invalid replay supplied
           content:
