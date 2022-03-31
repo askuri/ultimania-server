@@ -128,6 +128,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error-response"
+  /players/{login}:
+    get:
+      description: Get information about the player
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/player"
+        404:
+          description: player not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error_response"
   /players:
     put:
       description: create the player if not exists, update otherwise
@@ -260,6 +275,7 @@ components:
               - RECORD_NOT_FOUND
               - MAP_NOT_FOUND
               - REPLAY_NOT_FOUND
+              - PLAYER_NOT_FOUND
               - BANNED_PLAYER
               - INVALID_REPLAY
             message:

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\PlayerNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Player;
 use Illuminate\Http\Request;
@@ -9,6 +10,16 @@ use Ramsey\Uuid\Uuid;
 
 class PlayerController extends Controller
 {
+    public function show(string $playerLogin) {
+        $player = Player::find($playerLogin);
+
+        if ($player === null) {
+            throw new PlayerNotFoundException();
+        }
+
+        return $player;
+    }
+
     public function updateOrCreate(Request $request)
     {
         $requestData = $request->validate([

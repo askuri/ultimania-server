@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v5')->group(function () {
     Route::put('records', [RecordController::class, 'updateOrCreate']);
     Route::get('maps/{uid}/records', [MapsRecordsController::class, 'index']);
+    Route::get('players/{login}', [PlayerController::class, 'show']);
     Route::put('players', [PlayerController::class, 'updateOrCreate']);
     Route::put('maps', [MapController::class, 'updateOrCreate']);
     Route::get('records/{id}/replay', [RecordReplayController::class, 'show'])->name('get_replay');

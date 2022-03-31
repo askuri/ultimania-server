@@ -10,6 +10,26 @@ class PlayerControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function testShowPlayerWorks()
+    {
+        $player = Player::factory()->create();
+
+        $response = $this->get('/api/v5/players/'.$player->login);
+        $response->assertOk();
+        $response->assertJson($player->toArray());
+    }
+
+    public function testShowPlayerFailsIfPlayerDoesntExist()
+    {
+        $response = $this->get('/api/v5/players/doesnt_exist');
+        $response->assertNotFound();
+        $response->assertJson([
+            'error' => [
+                'code' => 'PLAYER_NOT_FOUND'
+            ]
+        ]);
+    }
+
     public function testPlayerStoredIfNotExist()
     {
         $player = Player::factory()->make();
