@@ -27,7 +27,7 @@ class ViewReplayControllerTest extends TestCase
     public function testNoRecord()
     {
         $getResponse = $this->get('manialinks/view_replay?record_id=nothing');
-        $getResponse->assertNotFound();
+        $getResponse->assertOk();
         $getResponse->assertSee('record');
     }
 
@@ -36,7 +36,7 @@ class ViewReplayControllerTest extends TestCase
         $record = TestData::record()->create();
 
         $getResponse = $this->get('manialinks/view_replay?record_id=' . $record->id);
-        $getResponse->assertNotFound();
+        $getResponse->assertOk();
         $getResponse->assertSee('replay');
     }
 }

@@ -7,8 +7,7 @@ use App\Models\Record;
 use App\Services\ReplayFileService;
 use Illuminate\Http\Request;
 
-class ViewReplayController extends Controller
-{
+class ViewReplayController extends Controller {
     private ReplayFileService $replayFileService;
 
     /**
@@ -27,16 +26,11 @@ class ViewReplayController extends Controller
         $record = Record::find($recordId);
 
         if ($record === null) {
-            return response(
-                view('manialinks.maniacode-message', ['message' => "Unfortunately we couldn't find the record you're trying to get a replay for."]),
-                404
-            );
+            // don't return HTTP Status 404 because the Manialink browser will ignore the body and just display its own "not found" message
+            return view('manialinks.maniacode-message', ['message' => "Unfortunately we couldn't find the record you're trying to get a replay for."]);
         }
-        if (!$this->replayFileService->replayExists($record)) {
-            return response(
-                view('manialinks.maniacode-message', ['message' => "Unfortunately we couldn't find a replay for this track."]),
-                404
-            );
+        if (!$record->getReplayAvailableAttribute()) {
+            return view('manialinks.maniacode-message', ['message' => "We couldn't find a replay for this track or the player doesn't allow downloading it."]);
         }
 
         return view('manialinks.download-replay.show', [
