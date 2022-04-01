@@ -8,15 +8,6 @@ use App\Services\ReplayFileService;
 use Illuminate\Http\Request;
 
 class ViewReplayController extends Controller {
-    private ReplayFileService $replayFileService;
-
-    /**
-     * @param ReplayFileService $replayFileService
-     */
-    public function __construct(ReplayFileService $replayFileService) {
-        $this->replayFileService = $replayFileService;
-    }
-
 
     public function show(Request $request) {
         $recordId = $request->validate([
