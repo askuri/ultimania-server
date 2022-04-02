@@ -68,18 +68,18 @@ class ImportFromLegacyDb extends Command
             ];
         };
 
-        require 'import/player_with_ban_reason.php';
         $player_with_ban_reason = [];
+        require 'import/player_with_ban_reason.php';
         $this->chunkedMapAndInsert('players', $player_with_ban_reason, $mapPlayer);
         unset($players);
 
-        require 'import/maps.php';
         $maps = [];
+        require 'import/maps.php';
         $this->chunkedMapAndInsert('maps', $maps, $mapMap);
         unset($maps);
 
-        require 'import/record_joined_players_maps.php';
         $record_joined_players_maps = [];
+        require 'import/record_joined_players_maps.php';
         $this->chunkedMapAndInsert('records', $record_joined_players_maps, $mapRecord);
         unset($record_joined_players_maps);
 
