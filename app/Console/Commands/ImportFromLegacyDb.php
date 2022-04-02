@@ -89,7 +89,7 @@ class ImportFromLegacyDb extends Command
     }
 
     private function chunkedMapAndInsert($newTableName, $legacyTableContent, $mapper) {
-        $chunksize = 50;
+        $chunksize = 5000;
 
         $insertTmp = [];
         foreach ($legacyTableContent as $i => $row) {
