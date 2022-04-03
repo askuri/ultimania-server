@@ -32,7 +32,7 @@ class ImportFromLegacyDb extends Command
         // must be the same as mysql server timezone.
         // if not, you will end up trying to insert a date that in CE(S)T would be 2020-03-29 02:29,
         // a time which doesn't exist in this timezone. It's in the transition of daylight savings time!
-        // date_default_timezone_set('Europe/Berlin');
+        date_default_timezone_set('Europe/Berlin');
 
         // memory leak workaround
         DB::connection()->unsetEventDispatcher();
@@ -69,17 +69,17 @@ class ImportFromLegacyDb extends Command
         };
 
         $player_with_ban_reason = [];
-        require 'import/player_with_ban_reason.php';
+        require 'legacy-migration/import/player_with_ban_reason.php';
         $this->chunkedMapAndInsert('players', $player_with_ban_reason, $mapPlayer);
         unset($players);
 
         $maps = [];
-        require 'import/maps.php';
+        require 'legacy-migration/import/maps.php';
         $this->chunkedMapAndInsert('maps', $maps, $mapMap);
         unset($maps);
 
         $record_joined_players_maps = [];
-        require 'import/record_joined_players_maps.php';
+        require 'legacy-migration/import/record_joined_players_maps.php';
         $this->chunkedMapAndInsert('records', $record_joined_players_maps, $mapRecord);
         unset($record_joined_players_maps);
 
