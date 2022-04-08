@@ -121,7 +121,7 @@ class RecordControllerTest extends TestCase
 
         $response->assertForbidden();
         $response->assertJson([
-            'error' => [
+            'message' => [
                 'code' => 'BANNED_PLAYER',
             ]
         ]);

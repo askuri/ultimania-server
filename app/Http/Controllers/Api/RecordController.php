@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\BannedPlayerException;
 use App\Http\Controllers\Controller;
 use App\Models\Map;
 use App\Models\Player;
@@ -20,9 +19,6 @@ class RecordController extends Controller
         $this->replayFileService = $replayFileService;
     }
 
-    /**
-     * @throws BannedPlayerException
-     */
     public function updateOrCreate(Request $request)
     {
         $newRecord = $this->validateRecordSubmissionAndReturnIt($request);
@@ -31,7 +27,14 @@ class RecordController extends Controller
         $player = $this->ensurePlayerExists($newRecord['player_login']);
         $this->ensureMapExists($newRecord['map_uid']);
 
-        $this->bailOutIfPlayerIsBanned($player);
+        if ($player->banned) {
+            return response([
+                'message' => [
+                    'code' => 'BANNED_PLAYER',
+                    'message' => ''
+                ]
+            ], 403);
+        }
 
         $recordModel = $this->createRecordOrReturnExistingOne($newRecord);
 
@@ -65,15 +68,6 @@ class RecordController extends Controller
             'map_uid' => 'string|required',
             'score' => 'integer|required|min:1',
         ]);
-    }
-
-    /**
-     * @throws BannedPlayerException
-     */
-    private function bailOutIfPlayerIsBanned($player): void {
-        if ($player->banned === true) {
-            throw new BannedPlayerException();
-        }
     }
 
     private function createRecordOrReturnExistingOne(array $newRecord) {

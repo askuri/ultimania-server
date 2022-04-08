@@ -127,7 +127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/error-response"
+                $ref: "#/components/schemas/message-response"
   /players/{login}:
     get:
       description: Get information about the player
@@ -263,6 +263,20 @@ components:
       format: date-time
       description: unix timestamp
       example: 1639075065
+    message-response:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              enum:
+                - BANNED_PLAYER
+            message:
+              type: string
+          required:
+          - code
     error-response:
       type: object
       properties:
@@ -276,7 +290,6 @@ components:
               - MAP_NOT_FOUND
               - REPLAY_NOT_FOUND
               - PLAYER_NOT_FOUND
-              - BANNED_PLAYER
               - INVALID_REPLAY
             message:
               type: string
