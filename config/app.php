@@ -4,6 +4,8 @@ return [
 
     'replays_filesystem' => env('REPLAYS_FILESYSTEM'),
 
+    'admin_rec_passwords' => explode('|', env('ADMIN_REC_PASSWORDS')),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
