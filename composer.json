@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
+        "league/flysystem-sftp-v3": "^3.0",
         "ramsey/uuid": "^4.2."
     },
     "require-dev": {
