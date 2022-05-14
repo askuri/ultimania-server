@@ -57,7 +57,7 @@ class RefreshNicknames extends Command
 
             $this->info("Saved player number $i out of $playerCount, login: $player->login");
 
-            sleep(9); // 360 per hour allowed -> maximum 1 every 10 seconds.
+            sleep(11); // 360 per hour allowed -> maximum 1 every 10 seconds.
         }
 
         return 0;
