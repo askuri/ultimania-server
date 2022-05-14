@@ -63,7 +63,7 @@ return [
             'host' => env('REPLAYS_SFTP_HOST'),
             'username' => env('REPLAYS_SFTP_USERNAME'),
             'password' => env('REPLAYS_SFTP_PASSWORD'),
-            'port' => env('REPLAYS_SFTP_PORT', 22),
+            'port' => (int) env('REPLAYS_SFTP_PORT', 22),
             'root' => env('REPLAYS_SFTP_ROOT', ''),
             'timeout' => 5,
         ],
