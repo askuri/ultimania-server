@@ -54,4 +54,16 @@ class ReplayFileServiceTest extends TestCase {
         // if anything fails here, it will automatically fail the test. no assertion needed.
         $this->service->deleteReplayIfExists($record);
     }
+
+    public function testGetAllReplayRecordIds() {
+        $record1 = TestData::record()->make();
+        $this->service->storeReplay(TestData::VALID_REPLAY_CONTENT, $record1);
+        $record2 = TestData::record()->make();
+        $this->service->storeReplay(TestData::VALID_REPLAY_CONTENT, $record2);
+
+        $replayRecordIds = $this->service->getAllReplayRecordIds();
+
+        $this->assertContains($record1->id, $replayRecordIds);
+        $this->assertContains($record2->id, $replayRecordIds);
+    }
 }

@@ -41,6 +41,14 @@ class ReplayFileService {
         $this->filesystem()->delete($this->getFilename($forRecord));
     }
 
+    public function deleteReplayByRecordIdIfExists(string $id) {
+        $this->filesystem()->delete($id);
+    }
+
+    public function getAllReplayRecordIds() {
+        return $this->filesystem()->allFiles();
+    }
+
     /**
      * Sets the storage disk to temporary disk and clear it.
      * Important: this disk will remain populated until the application shuts down
