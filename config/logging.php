@@ -122,7 +122,8 @@ return [
             'level' => env('LOG_LEVEL_MAIL', 'error'),
             'with' => [
                 'mailer' => new Symfony\Component\Mailer\Mailer(Symfony\Component\Mailer\Transport::fromDsn(
-                    'smtp://'.urlencode(env('MAIL_USERNAME')).':'.urlencode(env('MAIL_PASSWORD')).'@'.env('MAIL_HOST').':'.env('MAIL_PORT'))),
+                    'smtp://'.urlencode(env('MAIL_USERNAME')).':'.urlencode(env('MAIL_PASSWORD'))
+                    .'@'.env('MAIL_HOST').':'.env('MAIL_PORT') . (!env('LOG_MAIL_VERIFY_PEER', true) ? '?verify_peer=0' : ''))),
                 'email' => fn ($content, $records) => (new Email())
                     ->subject('Ultimania error occurred')
                     ->from(env('MAIL_FROM_ADDRESS'))
