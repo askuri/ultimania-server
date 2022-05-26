@@ -16,7 +16,7 @@ class RefreshNicknames extends Command
      *
      * @var string
      */
-    protected $signature = 'refresh-nicknames';
+    protected $signature = 'refresh-nicknames {--start-offset=}';
 
     /**
      * The console command description.
@@ -40,7 +40,8 @@ class RefreshNicknames extends Command
         $players = Player::all();
         $playerCount = count($players);
 
-        foreach ($players as $i => $player) {
+        for ($i = $this->option("start-offset"); $i<$playerCount; $i++) {
+            $player = $players[$i];
             try
             {
                 $player->nick = $webservice->get($player->login)->nickname;
