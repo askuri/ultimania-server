@@ -2,7 +2,9 @@
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\SymfonyMailerHandler;
 use Monolog\Handler\SyslogUdpHandler;
+use Symfony\Component\Mime\Email;
 
 return [
 
@@ -17,7 +19,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => 'stack',
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +52,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => explode(',', env('LOG_CHANNELS', 'single')),
             'ignore_exceptions' => false,
         ],
 
@@ -112,6 +114,20 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        'mail' => [
+            'driver' => 'monolog',
+            'handler' => SymfonyMailerHandler::class,
+            'level' => env('LOG_LEVEL_MAIL', 'error'),
+            'with' => [
+                'mailer' => new Symfony\Component\Mailer\Mailer(Symfony\Component\Mailer\Transport::fromDsn(
+                    'smtp://'.urlencode(env('MAIL_USERNAME')).':'.urlencode(env('MAIL_PASSWORD')).'@'.env('MAIL_HOST').':'.env('MAIL_PORT'))),
+                'email' => fn ($content, $records) => (new Email())
+                    ->subject('Ultimania error occurred')
+                    ->from(env('MAIL_FROM_ADDRESS'))
+                    ->to(env('LOG_MAIL_TO_ADDRESS')),
+            ],
         ],
     ],
 
