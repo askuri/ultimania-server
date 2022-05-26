@@ -26,7 +26,7 @@ class SlowResponseAlert
         $threshold = config('app.slow_response_alert_threshold');
         $responseTime = $endTime - $startTime;
         if ($threshold > 0 && $responseTime > $threshold) {
-            Log::alert("Ultimania server response time is critically long. This request took $responseTime seconds.");
+            Log::alert("Ultimania server response time is critically long. This request took $responseTime seconds.", ['request' => $request]);
         }
 
         return $response;
