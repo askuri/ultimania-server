@@ -29,8 +29,8 @@ class RefreshReplayAvailableFlag extends Command
     public function handle(ReplayFileService $replayFileService)
     {
         $this->info("Collecting existent replay ids ...");
-        $actuallyReplayRecordIds = $replayFileService->getAllReplayRecordIds();
-        $actualReplaysCount = count($actuallyReplayRecordIds);
+        $existsentReplayRecordIds = $replayFileService->getAllReplayRecordIds();
+        $actualReplaysCount = count($existsentReplayRecordIds);
         $this->info("... done. Found $actualReplaysCount.");
 
         if ($actualReplaysCount == 0) {
@@ -42,8 +42,8 @@ class RefreshReplayAvailableFlag extends Command
         DB::table('records')->update(['replay_available' => false]);
         $this->info("... done");
 
-        foreach ($actuallyReplayRecordIds as $i => $recordId) {
-            $this->info("Updating $recordId. Progress: " . ($i+1 / $actualReplaysCount) * 100 . "%");
+        foreach ($existsentReplayRecordIds as $i => $recordId) {
+            $this->info("Updating $recordId. Progress: " . ($i+1 / count($existsentReplayRecordIds)) * 100 . "%");
 
             DB::table('records')
                 ->where('id', '=', $recordId)
