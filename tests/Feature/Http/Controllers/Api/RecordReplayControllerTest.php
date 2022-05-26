@@ -9,6 +9,7 @@ use App\Models\Player;
 use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use League\Flysystem\UnableToWriteFile;
 use Tests\TestCase;
 use Tests\TestData;
 
@@ -95,6 +96,21 @@ class RecordReplayControllerTest extends TestCase
 
         $this->expectException(InvalidReplayException::class);
         $this->controller->store($requestMock, $record->id);
+    }
+
+    public function testReplayAvailableFalseIfReplayNotSaved()
+    {
+        $replayFileService = \Mockery::mock(ReplayFileService::class);
+        $replayFileService->shouldReceive('storeReplay')->withAnyArgs()->andThrow(new UnableToWriteFile);
+        $controller = new RecordReplayController($replayFileService);
+
+        $record = TestData::record()->create();
+        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+
+        $storeResponse = $controller->store($requestMock, $record->id);
+
+        $this->assertFalse(json_decode($storeResponse->getContent())->replay_available);
+
     }
 
     public function testReplayAvailableFlagSetToTrue()

@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Exceptions\InvalidReplayException;
 use App\Models\Record;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FilesystemException;
 
 class ReplayFileService {
 
@@ -28,21 +30,30 @@ class ReplayFileService {
 
     /**
      * @throws InvalidReplayException
+     * @throws FilesystemException
      */
     public function storeReplay(string $replayContent, Record $forRecord): void {
         if (!$this->isReplayValid($replayContent)) {
+            if (!empty($replayContent)) {
+                Log::alert("Someone tried to store a replay that is invalid and not empty!", ['payloadFirstKbBase64' => base64_encode(substr($replayContent, 0, 1024))]);
+            }
             throw new InvalidReplayException('The replay you submitted seems to be invalid');
         }
 
-        $this->filesystem()->put($this->getFilename($forRecord), $replayContent);
+        $this->filesystem()->put($this->getFilename($forRecord), $replayContent, );
     }
 
+    /**
+     * @throws FilesystemException
+     */
     public function deleteReplayIfExists(Record $forRecord): void {
         $this->filesystem()->delete($this->getFilename($forRecord));
     }
 
     public function deleteReplayByRecordIdIfExists(string $id) {
-        $this->filesystem()->delete($id);
+        if ($this->filesystem()->exists($id)) {
+            $this->filesystem()->delete($id);
+        }
     }
 
     public function getAllReplayRecordIds() {

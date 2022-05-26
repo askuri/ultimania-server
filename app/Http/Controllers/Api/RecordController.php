@@ -8,6 +8,8 @@ use App\Models\Player;
 use App\Models\Record;
 use App\Services\ReplayFileService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use League\Flysystem\FilesystemException;
 use Ramsey\Uuid\Uuid;
 
 class RecordController extends Controller
@@ -43,7 +45,12 @@ class RecordController extends Controller
             $recordModel->replay_available = false;
             $recordModel->save();
 
-            $this->replayFileService->deleteReplayIfExists($recordModel);
+            try {
+                $this->replayFileService->deleteReplayIfExists($recordModel);
+            } catch (FilesystemException $e) {
+                Log::error("Can't delete replay after record update. Still setting the replay to unavailable so players don't confuse it with the correct one. Hoping for cleanup job to remove it.",
+                    ['exception' => $e, 'newRecord' => $newRecord]);
+            }
 
             $recordModel->replay_available = false;
             $recordModel->save();

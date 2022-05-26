@@ -22,9 +22,9 @@ class ReplayFilesystemTimeoutTest extends TestCase
         // maxTries should be 1 by config. The effectiveness of that setting is tested here
 
         $startTime = microtime(true);
-        $endTime = $startTime + 60;
         try {
             Storage::disk('replays_sftp')->exists("irrelevant");
+            $this->fail("Should have thrown exception.");
         } catch (UnableToCheckFileExistence $e) {
             $endTime = microtime(true);
         }

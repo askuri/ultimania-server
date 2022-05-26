@@ -10,6 +10,8 @@ use App\Models\Record;
 use App\Services\ReplayFileService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use League\Flysystem\FilesystemException;
 
 class RecordReplayController extends Controller
 {
@@ -32,6 +34,9 @@ class RecordReplayController extends Controller
             $record->save();
         } catch (ModelNotFoundException) {
             throw new RecordNotFoundException();
+        } catch (FilesystemException $e) {
+            Log::error("Can't store replay", ['exception' => $e, 'recordId' => $recordId]);
+            return response(['replay_available' => false], 201);
         }
 
         return response(['replay_available' => $record->isReplayPubliclyAvailable()], 201);

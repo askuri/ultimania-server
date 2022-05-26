@@ -67,6 +67,7 @@ return [
             'root' => env('REPLAYS_SFTP_ROOT', ''),
             'timeout' => 5,
             'maxTries' => 0,
+            'throw' => true, // throw exceptions
         ],
 
     ],
