@@ -6,6 +6,10 @@ return [
 
     'admin_rec_passwords' => explode('|', env('ADMIN_REC_PASSWORDS')),
 
+    // Time in seconds until a response should be sent. If it's slower than that, an alert will be logged.
+    // Set to 0 to disable.
+    'slow_response_alert_threshold' => env('slow_response_alert_threshold', '7'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
