@@ -66,6 +66,7 @@ return [
             'port' => (int) env('REPLAYS_SFTP_PORT', 22),
             'root' => env('REPLAYS_SFTP_ROOT', ''),
             'timeout' => 5,
+            'maxTries' => 0,
         ],
 
     ],
