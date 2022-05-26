@@ -60,11 +60,9 @@ class RecordReplayControllerTest extends TestCase
 
     public function testRetrievingFailsIfReplayDownloadNotAllowed()
     {
-        $record = TestData::record()
+        $record = TestData::record()->withReplayAvailable()
             ->for(Player::factory()->replay_download_forbidden()->create())
             ->create();
-        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
-        $this->controller->store($requestMock, $record->id);
 
         $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
 
@@ -90,12 +88,24 @@ class RecordReplayControllerTest extends TestCase
         ]);
     }
 
-    public function testSavingNonReplayFileFails() {
+    public function testSavingNonReplayFileFails()
+    {
         $record = TestData::record()->create();
         $requestMock = $this->makePostRequestMock(TestData::INVALID_REPLAY_CONTENT);
 
         $this->expectException(InvalidReplayException::class);
         $this->controller->store($requestMock, $record->id);
+    }
+
+    public function testReplayAvailableFlagSetToTrue()
+    {
+        $record = TestData::record()->create();
+        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+
+        $this->controller->store($requestMock, $record->id);
+
+        $record->refresh();
+        $this->assertTrue($record->replay_available);
     }
 
     /**

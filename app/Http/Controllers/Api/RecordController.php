@@ -40,9 +40,13 @@ class RecordController extends Controller
 
         if ($newRecord['score'] > $recordModel->score) {
             $recordModel->score = $newRecord['score'];
+            $recordModel->replay_available = false;
             $recordModel->save();
 
             $this->replayFileService->deleteReplayIfExists($recordModel);
+
+            $recordModel->replay_available = false;
+            $recordModel->save();
         }
 
         return $recordModel;
@@ -73,7 +77,7 @@ class RecordController extends Controller
     private function createRecordOrReturnExistingOne(array $newRecord) {
         return Record::firstOrCreate(
             ['player_login' => $newRecord['player_login'], 'map_uid' => $newRecord['map_uid']],
-            ['score' => $newRecord['score'], 'id' => Uuid::uuid4()]
+            ['score' => $newRecord['score'], 'id' => Uuid::uuid4(), 'replay_available' => false]
         );
     }
 }

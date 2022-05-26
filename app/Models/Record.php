@@ -11,8 +11,6 @@ class Record extends Model
 {
     use HasFactory;
 
-    private ReplayFileService $replayFileService;
-
     /**
      * The primary key associated with the table.
      */
@@ -31,9 +29,11 @@ class Record extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['id', 'player_login', 'map_uid', 'score'];
+    protected $fillable = ['id', 'player_login', 'map_uid', 'score', 'replay_available'];
 
-    protected $appends = ['replay_available'];
+    protected $casts = [
+        'replay_available' => 'boolean',
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.
@@ -62,7 +62,7 @@ class Record extends Model
         return $this->belongsTo(Map::class, 'map_uid', 'uid');
     }
 
-    public function getReplayAvailableAttribute(): bool {
-        return resolve(ReplayFileService::class)->replayExists($this) && $this->player->allow_replay_download;
+    public function isReplayPubliclyAvailable(): bool {
+        return $this->replay_available && $this->player->allow_replay_download;
     }
 }

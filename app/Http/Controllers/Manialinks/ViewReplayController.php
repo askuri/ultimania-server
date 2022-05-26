@@ -20,7 +20,7 @@ class ViewReplayController extends Controller {
             // don't return HTTP Status 404 because the Manialink browser will ignore the body and just display its own "not found" message
             return view('manialinks.maniacode-message', ['message' => "Unfortunately we couldn't find the record you're trying to get a replay for."]);
         }
-        if (!$record->getReplayAvailableAttribute()) {
+        if (!$record->isReplayPubliclyAvailable()) {
             return view('manialinks.maniacode-message', ['message' => "We couldn't find a replay for this track or the player doesn't allow downloading it."]);
         }
 

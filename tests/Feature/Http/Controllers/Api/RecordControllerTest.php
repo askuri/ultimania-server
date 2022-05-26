@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 use App\Http\Controllers\Api\RecordReplayController;
 use App\Models\Map;
 use App\Models\Player;
+use App\Models\Record;
 use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -140,5 +141,23 @@ class RecordControllerTest extends TestCase
         $this->put('/api/v5/records', $updatedRecordToSubmit);
 
         $this->assertFalse($this->replayFileService->replayExists($record));
+    }
+
+    public function testReplayAvailableSetFalseIfRecordUpdated() {
+        $record = Record::factory()->withReplayAvailable()
+            ->for(Player::factory())
+            ->for(Map::factory())
+            ->create();
+
+        $updatedRecordToSubmit = [
+            'player_login' => $record->player->login,
+            'map_uid' => $record->map->uid,
+            'score' => $record->score + 345,
+        ];
+
+        $this->put('/api/v5/records', $updatedRecordToSubmit);
+
+        $record->refresh();
+        $this->assertFalse($record->replay_available);
     }
 }

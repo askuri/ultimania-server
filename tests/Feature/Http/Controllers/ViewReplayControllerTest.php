@@ -14,10 +14,7 @@ class ViewReplayControllerTest extends TestCase
 
     public function testSuccess()
     {
-        $record = TestData::record()->create();
-        $this->mock(ReplayFileService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('replayExists')->andReturn(true);
-        });
+        $record = TestData::record()->withReplayAvailable()->create();
 
         $getResponse = $this->get('manialinks/view_replay?record_id=' . $record->id);
         $getResponse->assertSee('view_replay');

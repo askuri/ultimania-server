@@ -22,4 +22,12 @@ class RecordFactory extends Factory
             'score' => 300,
         ];
     }
+
+    public function withReplayAvailable() {
+        return $this->state(function (array $attributes) {
+            return [
+                'replay_available' => true,
+            ];
+        });
+    }
 }
