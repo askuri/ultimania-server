@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var string[]
      */
     protected $dontReport = [
-        //
+        MapNotFoundException::class, // these were flooding the logs in the early days. maybe it comes from the legacy adapter.
     ];
 
     /**
