@@ -17,14 +17,14 @@ class SlowResponseAlert
      */
     public function handle(Request $request, Closure $next)
     {
-        $startTime = microtime(true);
+        return $next($request);
+    }
 
-        $response = $next($request);
-
-        $endTime = microtime(true);
+    public function terminate($request, $response) {
+        $responseTime = microtime(true) - \LARAVEL_START;
 
         $threshold = config('app.slow_response_alert_threshold');
-        $responseTime = $endTime - $startTime;
+
         if ($threshold > 0 && $responseTime > $threshold) {
             Log::alert("Ultimania server response time is critically long. This request took $responseTime seconds.", ['request' => $request]);
         }

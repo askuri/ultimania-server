@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
+// LARAVEL_START is not defined during tests.
+define('LARAVEL_START', microtime(true));
+
 class SlowResponseAlertTest extends TestCase {
 
     public function testAlertOnSlowRequests() {
