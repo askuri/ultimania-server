@@ -22,3 +22,6 @@ Ultimania webservice, running publicly on [http://ultimania5.askuri.de](http://u
 Specification of the API can be found in [resources/openapi/contract.yaml](resources/openapi/contract.yaml).
 There is also a visual documentation generated from the spec available when the server is running under /swagger. 
 
+## Running tests
+
+Tests can be run inside IntelliJ (select `phpunit.xml` as run configuration) or from command line (`php artisan test`).

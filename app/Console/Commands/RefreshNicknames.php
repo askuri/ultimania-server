@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-require_once 'app/includes/trackmania-ws.php';
+require_once app_path('includes/trackmania-ws.php');
 
 use App\Models\Player;
 use Illuminate\Console\Command;
