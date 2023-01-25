@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Exceptions\InvalidReplayException;
 use App\Exceptions\RecordNotFoundException;
+use App\Exceptions\ReplayNotMatchingRecordException;
 use App\Http\Controllers\Api\RecordReplayController;
 use App\Models\Player;
 use App\Services\ReplayFileService;
@@ -30,19 +31,19 @@ class RecordReplayControllerTest extends TestCase
     public function testSavingAndRetrievingWorks()
     {
         $record = TestData::record()->create();
-        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+        $requestMock = $this->makePostRequestMock(TestData::validReplayWithScore142());
 
         $storeResponse = $this->controller->store($requestMock, $record->id);
         $this->assertTrue(json_decode($storeResponse->getContent())->replay_available);
 
         $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
         $getResponse->assertOk();
-        $getResponse->assertSee(TestData::VALID_REPLAY_CONTENT);
+        $getResponse->assertSee(TestData::validReplayWithScore142());
     }
 
     public function testSavingFailsIfIdUnknown()
     {
-        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+        $requestMock = $this->makePostRequestMock(TestData::validReplayWithScore142());
 
         $this->expectException(RecordNotFoundException::class);
         $this->controller->store($requestMock, 'does_not_exist');
@@ -92,9 +93,20 @@ class RecordReplayControllerTest extends TestCase
     public function testSavingNonReplayFileFails()
     {
         $record = TestData::record()->create();
-        $requestMock = $this->makePostRequestMock(TestData::INVALID_REPLAY_CONTENT);
+        $requestMock = $this->makePostRequestMock(TestData::invalidReplay());
 
         $this->expectException(InvalidReplayException::class);
+        $this->controller->store($requestMock, $record->id);
+    }
+
+    public function testSavingReplayWithNoneMatchingScoreFails()
+    {
+        $record = TestData::record()->create();
+        $record->score = 99;
+        $record->save();
+        $requestMock = $this->makePostRequestMock(TestData::validReplayWithScore142());
+
+        $this->expectException(ReplayNotMatchingRecordException::class);
         $this->controller->store($requestMock, $record->id);
     }
 
@@ -105,7 +117,7 @@ class RecordReplayControllerTest extends TestCase
         $controller = new RecordReplayController($replayFileService);
 
         $record = TestData::record()->create();
-        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+        $requestMock = $this->makePostRequestMock(TestData::validReplayWithScore142());
 
         $storeResponse = $controller->store($requestMock, $record->id);
 
@@ -116,7 +128,7 @@ class RecordReplayControllerTest extends TestCase
     public function testReplayAvailableFlagSetToTrue()
     {
         $record = TestData::record()->create();
-        $requestMock = $this->makePostRequestMock(TestData::VALID_REPLAY_CONTENT);
+        $requestMock = $this->makePostRequestMock(TestData::validReplayWithScore142());
 
         $this->controller->store($requestMock, $record->id);
 

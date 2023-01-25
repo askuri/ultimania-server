@@ -291,6 +291,7 @@ components:
               - REPLAY_NOT_FOUND
               - PLAYER_NOT_FOUND
               - INVALID_REPLAY
+              - REPLAY_NOT_MATCHING_RECORD
             message:
               type: string
           required:

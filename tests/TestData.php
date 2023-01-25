@@ -8,8 +8,6 @@ use App\Models\Record;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TestData {
-    public const VALID_REPLAY_CONTENT = 'GBX_some_content';
-    public const INVALID_REPLAY_CONTENT = 'invalid_content';
 
     /**
      * Generate a record and associate a player and a map with it.
@@ -20,5 +18,13 @@ class TestData {
         return Record::factory()
             ->for(Player::factory())
             ->for(Map::factory());
+    }
+
+    public static function validReplayWithScore142() {
+        return file_get_contents(base_path('tests/Resources/score_142.Replay.Gbx'));
+    }
+
+    public static function invalidReplay() {
+        return "invalid_replay";
     }
 }
