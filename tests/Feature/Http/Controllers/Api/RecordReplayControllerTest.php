@@ -7,6 +7,7 @@ use App\Exceptions\RecordNotFoundException;
 use App\Exceptions\ReplayNotMatchingRecordException;
 use App\Http\Controllers\Api\RecordReplayController;
 use App\Models\Player;
+use App\Services\RecordReplayMatcher;
 use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class RecordReplayControllerTest extends TestCase
 
         $replayFileService = new ReplayFileService();
         $replayFileService->useFakeDiskAndClearIt();
-        $this->controller = new RecordReplayController($replayFileService);
+        $this->controller = new RecordReplayController($replayFileService, new RecordReplayMatcher());
     }
 
     public function testSavingAndRetrievingWorks()
@@ -114,7 +115,7 @@ class RecordReplayControllerTest extends TestCase
     {
         $replayFileService = \Mockery::mock(ReplayFileService::class);
         $replayFileService->shouldReceive('storeReplay')->withAnyArgs()->andThrow(new UnableToWriteFile);
-        $controller = new RecordReplayController($replayFileService);
+        $controller = new RecordReplayController($replayFileService, new RecordReplayMatcher());
 
         $record = TestData::record()->create();
         $requestMock = $this->makePostRequestMock(TestData::validReplayWithScore142());
