@@ -39,7 +39,8 @@ class RecordReplayControllerTest extends TestCase
 
         $getResponse = $this->get('api/v5/records/' . $record->id . '/replay');
         $getResponse->assertOk();
-        $getResponse->assertSee(TestData::validReplayWithScore142());
+        // assertSee somehow fails although content is identical. Maybe because of binary?
+        $this->assertEquals(TestData::validReplayWithScore142(), $getResponse->getContent());
     }
 
     public function testSavingFailsIfIdUnknown()
