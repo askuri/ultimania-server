@@ -2,9 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Services\ReplayFileService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery\MockInterface;
 use Tests\TestCase;
 use Tests\TestData;
 
@@ -24,7 +22,7 @@ class ViewReplayControllerTest extends TestCase
     public function testNoRecord()
     {
         $getResponse = $this->get('manialinks/view_replay?record_id=nothing');
-        $getResponse->assertOk();
+        $getResponse->assertNotFound();
         $getResponse->assertSee('record');
     }
 
