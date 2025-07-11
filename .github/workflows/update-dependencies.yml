@@ -1,0 +1,24 @@
+name: Update dependencies
+
+on:
+  schedule:
+    - cron: '43 3 * * 5'
+  # allow manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Update dependencies
+      run: composer update
+
+    - name: Run tests
+      run: vendor/bin/phpunit
+
+    # Commit all changed files back to the repository
+    - uses: stefanzweifel/git-auto-commit-action@v6
