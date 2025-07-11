@@ -3,6 +3,8 @@ name: Update dependencies
 on:
   schedule:
     - cron: '43 3 * * 5'
+  # allow manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   build:
