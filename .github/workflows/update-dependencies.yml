@@ -8,28 +8,16 @@ on:
 
 jobs:
   update-dependencies:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Update dependencies
       run: composer update
 
-    - name: Generate key
-      run: php artisan key:generate
+    - uses: ./.github/workflows/setup-laravel.yml
+    - uses: ./.github/workflows/run-phpunit.yml
 
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
-
-    - name: Run tests
-      run: vendor/bin/phpunit
-
-    # Commit all changed files back to the repository
     - uses: stefanzweifel/git-auto-commit-action@v6
       with:
         commit_message: Update dependencies
