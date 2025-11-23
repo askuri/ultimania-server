@@ -1,0 +1,19 @@
+{
+    "$$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "schedule": [
+        "on friday"
+    ],
+    "timezone": "UTC",
+    "composer": {
+        "rangeStrategy": "bump"
+    },
+    "group": {
+        "all": {
+            "groupName": "All dependencies",
+            "groupSlug": "all-deps"
+        }
+    },
+    "automerge": false,
+    "prConcurrentLimit": 1,
+    "prHourlyLimit": 1
+}
