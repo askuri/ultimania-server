@@ -10,7 +10,7 @@
     "packageRules": [
         // Don't update PHP version in composer.json
         {
-            "matchPackageNames": ["php"],
+            "matchDepNames": ["php"],
             "enabled": false
         },
         {
