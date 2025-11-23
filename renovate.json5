@@ -8,6 +8,11 @@
         "rangeStrategy": "bump"
     },
     "packageRules": [
+        // Don't update PHP version in composer.json
+        {
+            "matchPackageNames": ["php"],
+            "enabled": false
+        },
         {
             "groupName": "All dependencies",
             "groupSlug": "all-deps",
