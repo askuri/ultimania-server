@@ -1,19 +1,16 @@
 {
-    "name": "laravel/laravel",
+    "name": "askuri/ultimania-server",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Backend for Ultimania World Records.",
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "ext-xml": "*",
-        "guzzlehttp/guzzle": "^7.10.0",
         "laravel/framework": "^12.40.2",
         "laravel/telescope": "^5.15.1",
         "laravel/tinker": "^2.10.2",
         "league/flysystem-sftp-v3": "^3.30.0",
-        "ramsey/uuid": "^4.2.",
-        "symfony/mailer": "^7.4.0"
+        "ramsey/uuid": "^4.2."
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.9.1",
