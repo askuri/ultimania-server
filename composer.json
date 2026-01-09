@@ -6,16 +6,16 @@
     "require": {
         "php": "^8.2",
         "ext-xml": "*",
-        "laravel/framework": "^12.44.0",
-        "laravel/telescope": "^5.16.0",
-        "laravel/tinker": "^2.10.2",
+        "laravel/framework": "^12.46.0",
+        "laravel/telescope": "^5.16.1",
+        "laravel/tinker": "^2.11.0",
         "league/flysystem-sftp-v3": "^3.30.0",
         "ramsey/uuid": "^4.2."
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.9.1",
         "fakerphp/faker": "^1.24.1",
-        "laravel/sail": "^1.51.0",
+        "laravel/sail": "^1.52.0",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.8.3",
         "phpunit/phpunit": "^12.5.4"
