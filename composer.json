@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.2",
         "ext-xml": "*",
-        "laravel/framework": "^12.46.0",
+        "laravel/framework": "^12.47.0",
         "laravel/telescope": "^5.16.1",
         "laravel/tinker": "^2.11.0",
         "league/flysystem-sftp-v3": "^3.30.0",
@@ -18,7 +18,7 @@
         "laravel/sail": "^1.52.0",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.8.3",
-        "phpunit/phpunit": "^12.5.4"
+        "phpunit/phpunit": "^12.5.5"
     },
     "autoload": {
         "psr-4": {
