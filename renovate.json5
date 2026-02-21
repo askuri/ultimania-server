@@ -17,6 +17,12 @@
             "groupName": "All dependencies",
             "groupSlug": "all-deps",
             "matchPackagePatterns": ["*"]
+        },
+
+        // nunomaduro/collision currently doesn't support PHPUnit 13
+        {
+            "matchPackageNames": "phpunit/phpunit",
+            "allowedVersions": "<13"
         }
     ],
     "automerge": false,
