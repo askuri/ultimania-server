@@ -6,9 +6,9 @@
     "require": {
         "php": "^8.2",
         "ext-xml": "*",
-        "laravel/framework": "^12.55.1",
+        "laravel/framework": "^13.2.0",
         "laravel/telescope": "^5.18.0",
-        "laravel/tinker": "^2.11.1",
+        "laravel/tinker": "^3.0.0",
         "league/flysystem-sftp-v3": "^3.31.0",
         "ramsey/uuid": "^4.2."
     },
