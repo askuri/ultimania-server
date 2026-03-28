@@ -45,13 +45,11 @@ class ReplayFileServiceTest extends TestCase {
         $this->assertFalse($this->service->replayExists($record));
     }
 
-    /**
-     * @doesNotPerformAssertions
-     */
     public function testDeleteReplayIfNotExists() {
         $record = TestData::record()->make();
 
         // if anything fails here, it will automatically fail the test. no assertion needed.
+        $this->expectNotToPerformAssertions();
         $this->service->deleteReplayIfExists($record);
     }
 
