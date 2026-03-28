@@ -13,12 +13,13 @@
         "ramsey/uuid": "^4.2."
     },
     "require-dev": {
-        "spatie/laravel-ignition": "^2.12.0",
         "fakerphp/faker": "^1.24.1",
+        "laravel/boost": "^2.4",
         "laravel/sail": "^1.54.0",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.9.1",
-        "phpunit/phpunit": "^12.5.14"
+        "phpunit/phpunit": "^12.5.14",
+        "spatie/laravel-ignition": "^2.12.0"
     },
     "autoload": {
         "psr-4": {
