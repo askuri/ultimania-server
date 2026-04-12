@@ -1,4 +1,3 @@
-<? xml version = "1.0" encoding = "utf-8" ?>
 <manialink>
     <timeout>0</timeout>
 
