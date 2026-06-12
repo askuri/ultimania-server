@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.3",
         "ext-xml": "*",
-        "laravel/framework": "^13.14.0",
+        "laravel/framework": "^13.15.0",
         "laravel/telescope": "^5.20.0",
         "laravel/tinker": "^3.0.2",
         "league/flysystem-sftp-v3": "^3.33.0",
@@ -14,7 +14,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
-        "laravel/boost": "^2.4.9",
+        "laravel/boost": "^2.4.10",
         "laravel/sail": "^1.62.0",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.9.4",
