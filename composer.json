@@ -6,19 +6,19 @@
     "require": {
         "php": "^8.3",
         "ext-xml": "*",
-        "laravel/framework": "^13.21.1",
-        "laravel/telescope": "^5.21.0",
+        "laravel/framework": "^13.24.0",
+        "laravel/telescope": "^5.22.0",
         "laravel/tinker": "^3.0.2",
         "league/flysystem-sftp-v3": "^3.33.0",
         "ramsey/uuid": "^4.2."
     },
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
-        "laravel/boost": "^2.4.13",
-        "laravel/sail": "^1.64.0",
+        "laravel/boost": "^2.5.0",
+        "laravel/sail": "^1.65.0",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.9.5",
-        "phpunit/phpunit": "^12.5.31",
+        "phpunit/phpunit": "^12.5.33",
         "spatie/laravel-ignition": "^2.12.0"
     },
     "autoload": {
