@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8eeba2261458594778180895f041731b",
+    "content-hash": "a961d7e91bf223c211117be5607031c3",
     "packages": [
         {
             "name": "brick/math",
@@ -6782,16 +6782,16 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v2.5.0",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "f6b054dcbc0aacf1d187128edf7d917c6d99792a"
+                "reference": "e4f651a973cb454616c36d324150b6a533913bd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/f6b054dcbc0aacf1d187128edf7d917c6d99792a",
-                "reference": "f6b054dcbc0aacf1d187128edf7d917c6d99792a",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/e4f651a973cb454616c36d324150b6a533913bd1",
+                "reference": "e4f651a973cb454616c36d324150b6a533913bd1",
                 "shasum": ""
             },
             "require": {
@@ -6844,7 +6844,7 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2026-08-04T21:10:39+00:00"
+            "time": "2026-08-06T19:01:40+00:00"
         },
         {
             "name": "laravel/mcp",
