@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.3",
         "ext-xml": "*",
-        "laravel/framework": "^13.34.0",
+        "laravel/framework": "^13.35.0",
         "laravel/telescope": "^5.25.0",
         "laravel/tinker": "^3.0.2",
         "league/flysystem-sftp-v3": "^3.36.0",
@@ -14,11 +14,11 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.24.1",
-        "laravel/boost": "^2.10.1",
+        "laravel/boost": "^2.10.3",
         "laravel/sail": "^1.68.0",
         "mockery/mockery": "^1.6.15",
         "nunomaduro/collision": "^8.9.5",
-        "phpunit/phpunit": "^12.5.37",
+        "phpunit/phpunit": "^12.5.38",
         "spatie/laravel-ignition": "^2.12.0"
     },
     "autoload": {
