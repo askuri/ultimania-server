@@ -6,7 +6,7 @@
     "require": {
         "php": "^8.3",
         "ext-xml": "*",
-        "laravel/framework": "^13.36.0",
+        "laravel/framework": "^13.37.0",
         "laravel/telescope": "^5.26.0",
         "laravel/tinker": "^3.0.2",
         "league/flysystem-sftp-v3": "^3.36.0",
@@ -18,7 +18,7 @@
         "laravel/sail": "^1.69.0",
         "mockery/mockery": "^1.6.15",
         "nunomaduro/collision": "^8.9.5",
-        "phpunit/phpunit": "^12.5.39",
+        "phpunit/phpunit": "^12.5.40",
         "spatie/laravel-ignition": "^2.12.0"
     },
     "autoload": {
