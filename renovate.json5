@@ -25,7 +25,8 @@
             "allowedVersions": "<13"
         }
     ],
-    "automerge": false,
+    "automerge": true,
+    "platformAutomerge": true,
     "prConcurrentLimit": 1,
     "prHourlyLimit": 1
 }
